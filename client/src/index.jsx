@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
-import searchGitHub from './searchGitHub.js';
+import Server from './Server.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,12 +11,11 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
-
   }
 
   search (term) {
     console.log(`${term} was searched`);
-    searchGitHub(term);
+    this.props.Server.post(term);
   }
 
   render () {
@@ -28,4 +27,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App searchGitHub={searchGitHub} />, document.getElementById('app'));
+ReactDOM.render(<App Server={Server} />, document.getElementById('app'));
