@@ -14,7 +14,7 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = function (repos, callback) {
-  return repos.map(function (repo) {
+  repos.forEach(function (repo) {
     Repo.update({_id: repo.id},
       {
       _id:repo.id,
@@ -32,6 +32,15 @@ let save = function (repos, callback) {
   });
 }
 
+// sort for top 25
+
+let top25 = function () {
+  //fetcher.repos.createIndex({forks: -1})
+  return Repo.find().sort({forks: -1}).limit(25);
+}
+
 module.exports.save = save;
 var saveAsync = Promise.promisify(save)
 module.exports.saveAsync = saveAsync;
+
+module.exports.top25 = top25;

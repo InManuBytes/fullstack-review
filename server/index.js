@@ -11,18 +11,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+//////////////////////////////////////////////
+//------------------ROUTES------------------//
+//////////////////////////////////////////////
 app.post('/repos', function (req, res, next) {
   // This route should take the github username provided
   // and get the repo information from the github API, then
-  // save the repo information in the database
-  // req.body -> {username 'search term'}
   return gitHub.getReposByUsernameAsync(req.body.username)
-    .then((repos) => {
-      return db.save(repos)
+  // req.body -> {username 'search term'}
+  .then((repos) => {
+    // save the repo information in the database
+      return db.saveAsync(repos);
     })
     .then((saved) => {
-      console.log(saved);
-      next();
+      return db.top25()
+    })
+    .then((top25) => {
+      console.log(top25)
     })
     .catch(error => {
       throw error;
