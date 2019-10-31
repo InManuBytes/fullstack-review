@@ -27,7 +27,7 @@ app.post('/repos', function (req, res, next) {
       return db.top25()
     })
     .then((top25) => {
-      console.log(top25)
+      res.status(201).end(top25);
     })
     .catch(error => {
       throw error;

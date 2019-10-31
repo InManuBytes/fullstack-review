@@ -36,6 +36,7 @@ let save = function (repos, callback) {
 
 let top25 = function () {
   //fetcher.repos.createIndex({forks: -1})
+  // Sorts in descending order
   return Repo.find().sort({forks: -1}).limit(25);
 }
 

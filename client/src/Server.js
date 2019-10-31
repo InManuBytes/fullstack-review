@@ -9,7 +9,18 @@ var Server = {
       data: {username: username},
       success: callback,
       error: (error) => {
-        console.log(error);
+        console.log('POST ERROR:', error);
+      }
+    })
+  },
+  get: (callback) => {
+    $.ajax({
+      url: Server.address + '/repos',
+      type: 'GET',
+      dataType: 'json',
+      success: callback,
+      error: (error) => {
+        console.log('GET ERROR: ', error);
       }
     })
   }

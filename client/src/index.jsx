@@ -15,8 +15,14 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    this.props.Server.post(term);
+    this.props.Server.post(term, (top25repos) => {
+      this.setState({repos: top25repos});
+    });
   }
+
+  //componentDidMount calls Server.get
+  // so everytime there is a page refresh it
+  // will populate repos in state
 
   render () {
     return (<div>
