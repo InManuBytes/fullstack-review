@@ -2,10 +2,7 @@ const request = require('request');
 const config = require('../config.js');
 const Promise = require('bluebird');
 
-let getReposByUsername = (req, callback) => {
-  // The options object has been provided to help you out,
-  // but you'll have to fill in the URL
-  var username = req.body.username;
+let getReposByUsername = (username, callback) => {
   let options = {
     url: `https://api.github.com/users/${username}/repos`,
     headers: {

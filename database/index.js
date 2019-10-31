@@ -1,16 +1,37 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
+const Promise = require('bluebird');
 
 let repoSchema = mongoose.Schema({
-  // TODO: your schema here!
+  _id: Number,
+  name: String,
+  author: String,
+  description: String,
+  forks: Number,
+  url: String
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (/* TODO */) => {
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
+let save = function (repos, callback) {
+  repos.forEach(function (repo) {
+    Repo.update({_id: repo.id},
+      {
+      _id:repo.id,
+      name: repo.name,
+      author: repo.owner.login,
+      description: repo.description,
+      forks: repo.forks_count,
+      url: repo.html_url
+    }, {upsert: true}, function (err, writeOpResult) {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, writeOpResult);
+    });
+  });
 }
 
 module.exports.save = save;
+var saveAsync = Promise.promisify(save)
+module.exports.saveAsync = saveAsync;
