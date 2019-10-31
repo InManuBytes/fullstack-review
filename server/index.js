@@ -18,7 +18,7 @@ app.post('/repos', function (req, res, next) {
   // req.body -> {username 'search term'}
   return gitHub.getReposByUsernameAsync(req.body.username)
     .then((repos) => {
-      return db.saveAsync(repos)
+      return db.save(repos)
     })
     .then((saved) => {
       console.log(saved);

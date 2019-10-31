@@ -14,7 +14,7 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = function (repos, callback) {
-  repos.forEach(function (repo) {
+  return repos.map(function (repo) {
     Repo.update({_id: repo.id},
       {
       _id:repo.id,
