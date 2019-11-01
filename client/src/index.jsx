@@ -23,6 +23,11 @@ class App extends React.Component {
   //componentDidMount calls Server.get
   // so everytime there is a page refresh it
   // will populate repos in state
+  componentDidMount () {
+    this.props.Server.get((repos) => {
+      this.setState({repos: repos.top25});
+    })
+  }
 
   render () {
     return (<div>

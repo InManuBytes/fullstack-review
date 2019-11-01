@@ -17,6 +17,7 @@ var Server = {
     $.ajax({
       url: Server.address + '/repos',
       type: 'GET',
+      contentType: 'application/json',
       dataType: 'json',
       success: callback,
       error: (error) => {

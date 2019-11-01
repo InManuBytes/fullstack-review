@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const gitHub = require('../helpers/github.js');
 const db = require('../database/index.js');
+const Promise = require('bluebird');
 let app = express();
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -28,15 +29,24 @@ app.post('/repos', function (req, res, next) {
     })
     .then((top25) => {
       res.status(201).end(JSON.stringify(top25));
+      next();
     })
     .catch(error => {
       throw error;
     })
 });
 
-app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
+app.get('/repos', function (req, res, next) {
+  return  new Promise((resolve, reject) => {
+    var top25repos = db.top25();
+    resolve(top25repos);
+    reject("no repos");
+  })
+    .then((top25) => {
+      //console.log(top25);
+      res.status(200).end(JSON.stringify({top25: top25}));
+      next();
+    })
 });
 
 let port = 1128;
