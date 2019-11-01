@@ -6,6 +6,7 @@ const RepoList = ({repos}) => (
     <h4> Repo List Component </h4>
     There are {repos.length} repos.
     {repos.map(repo => {
+      //console.log(repo)
       return <RepoItem repo={repo} />;
     })}
   </div>

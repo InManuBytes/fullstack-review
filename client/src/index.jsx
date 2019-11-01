@@ -16,7 +16,7 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     this.props.Server.post(term, (top25repos) => {
-      this.setState({repos: top25repos});
+      this.setState({repos: JSON.parse(top25repos)});
     });
   }
 
